@@ -1,3 +1,0 @@
-#TYPE System.Management.Automation.PSCustomObject,,,,,,,
-Name,VMRam (GB or MB),Genration,Core Count,VHD Path,VHD Size (GB or MB),Network Switch,ISO Path
-Name,12,,,,,,
