@@ -37,6 +37,6 @@ $ComputerName = Read-Host "What is the new computer name($ComputerName)"
 
 Set-TimeZone -id "New Zealand Standard Time"
 New-NetIPAddress -Interfacealias $Adpater -IPAddress $Ipaddress -PrefixLength $Prefix -DefaultGateway $gateway
-Set-DnsServerClientAddress -interfacealias "Ethernet" -ServerAddresses $DNSSServer
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddress $DNSSServer
 Rename-NetAdapter $Adpater -NewName $NewAdaptername
 Rename-Computer -NewName $ComputerName -Restart

@@ -10,10 +10,8 @@ function Test-Admin {
 if ((Test-Admin) -eq $false)  {
     if ($elevated) {
         # tried to elevate, did not work, aborting
-        Read-Host Was not able to start Powershell with Administrtor Permisssions
-        Set-ExecutionPolicy Unrestricted 
+        Read-Host "Was not able to start Powershell with Administrtor Permisssions please run Set-ExecutionPolicy Unrestricted"
     } else {
-        Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
         Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
     }
     exit
@@ -50,18 +48,18 @@ try{ #try cacth for error catching
     if($ExistingSwitchs.name.contains($VMSwitchName)){
         
         #Tell user that script is adding VM Switch 
-        Write-Host -ForegroundColor Magenta Ok Adding VM Switch `n
+        Write-Host -ForegroundColor Magenta Ok Adding VM Switch 
     }
     else{
 
         #the switch dose not exits. So asking user if they want to make a new Switch
-        $Answer = Read-Host it dosnet look like that switch exists do you want to create it `n
+        $Answer = Read-Host it dosnet look like that switch exists do you want to create it 
 
         if($Answer.ToLower() -eq "yes" -or $Answer.ToLower() -eq "y"){
         
             #if they User enters Yes it gose through the process of making the switch
-            Write-Host got the name: $VMSwitchName `n
-            $SwitchType = Read-Host What is the Switch Type `n
+            Write-Host got the name: $VMSwitchName 
+            $SwitchType = Read-Host What is the Switch Type 
 
             #if the user enters they want a WAN adaoter it will go through making the WAN Adapter
             if($SwitchType.ToLower() -eq "wan" -or $SwitchType.ToLower() -eq "exe" -or $SwitchType.ToLower() -eq "external"){
@@ -104,6 +102,7 @@ catch{
     #it will catch it and continue the script
     Write-Host -ForegroundColor Red "An error occurred:"
       Write-Host -ForegroundColor Red $_
+      Read-Host Push enter to exit
 }
 
 #Asking the user what Genaration do they want for the VM
@@ -119,8 +118,7 @@ Write-Host "Where would you like to Store VHD"
 Add-Type -AssemblyName System.Windows.Forms
 $FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog
 $FolderBrowser.RootFolder = 'MyComputer' 
-[void]$FolderBrowser.ShowDialog()
-$FolderBrowser.SelectedPath
+$FolderBrowser.ShowDialog()
 
 #Asking the User what size do they want the VHD
 $VMSize = Read-Host What size is the hard Drive
@@ -153,11 +151,11 @@ if($MutipleVMs.ToLower() -eq 'y' -or $MutipleVMs -eq 'yes'){
     [int64]$HowMany = Read-Host How many VMs `n                                     
 
     #Inzilatinzoing the timer varibeles
-    [int64]$DVDVMs = $HowMany
-    [int64]$NewNameInt = $HowMany
-    [int64]$NewNameInt2 = $HowMany 
-    [int64]$Otherint = $HowMany
-    [int64]$AddingDVDInt = $HowMany
+    [int64]$DVDVMs = $HowMany + 1
+    [int64]$NewNameInt = $HowMany + 1
+    [int64]$NewNameInt2 = $HowMany  + 1
+    [int64]$Otherint = $HowMany + 1
+    [int64]$AddingDVDInt = $HowMany + 1
 
 
     #asking the user if they want to rename the VMS
@@ -175,7 +173,7 @@ if($MutipleVMs.ToLower() -eq 'y' -or $MutipleVMs -eq 'yes'){
             $NewNamesList += $NewName
             }
 
-        }until($NewNameInt -eq -1)
+        }until($NewNameInt -eq 0)
 
         [int64]$NewNameInt = $HowMany
 
@@ -187,7 +185,7 @@ if($MutipleVMs.ToLower() -eq 'y' -or $MutipleVMs -eq 'yes'){
                 new-vm $i -MemoryStartupBytes $RamOutput -NewVHDPath "$($FolderBrowser.SelectedPath)\$i.vhdx" -NewVHDSizeBytes $VHDOutput -SwitchName $VMSwitchName -Generation $Gen | Set-VM -ProcessorCount $CoreCount -StaticMemory -CheckpointType Disabled
                 $NewNameInt = $NewNameInt - 1
                 }
-        }until($NewNameInt -eq -1)
+        }until($NewNameInt -eq 0)
 
     }
 
@@ -197,7 +195,7 @@ if($MutipleVMs.ToLower() -eq 'y' -or $MutipleVMs -eq 'yes'){
         do{
             new-vm "$VMName.$HowMany" -MemoryStartupBytes $RamOutput -NewVHDPath "$($FolderBrowser.SelectedPath)\$VMName.$HowMany.vhdx" -NewVHDSizeBytes $VHDOutput -SwitchName $VMSwitchName -Generation $Gen | Set-VM -ProcessorCount $CoreCount -StaticMemory -CheckpointType Disabled
             $HowMany = $HowMany - 1
-        }until($HowMany -eq -1)
+        }until($HowMany -eq 0)
     }
 }
 else{
@@ -332,5 +330,4 @@ if($VMConnect.ToLower() -eq 'y' -or $VMConnect -eq 'yes'){
 }
 
 
-Read-Host Push enter to exit
 exit
