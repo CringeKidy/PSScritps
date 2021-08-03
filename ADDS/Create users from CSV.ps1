@@ -30,18 +30,21 @@ Foreach($User in $Users){
    $password = (ConvertTo-SecureString -AsPlainText $User."Password" -force)
    $Group = $User.Group
 
+   $UPN = $User."User name" + "@" + $User.domain
+
    $Settings = @{
     'Name' = $User."User name"
     'GivenName' = $User."First name"
     'Surname' = $User."Last name"
     'Displayname' = $User."Full name"
     'SamAccountName' = $User."User name"
-    'UserPrincipalName' = $User."User name"
+    'UserPrincipalName' = $UPN
     'AccountPassword' = $password
     'Enabled' = $true
     'Path' = $User.Path
    }
-   
+
+
    Try{
         Get-ADOrganizationalUnit $Settings.Path
    }

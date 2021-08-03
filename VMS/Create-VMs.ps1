@@ -183,8 +183,8 @@ if($MutipleVMs.ToLower() -eq 'y' -or $MutipleVMs -eq 'yes'){
         do{
             foreach($i in $NewNamesList){
                 new-vm $i -MemoryStartupBytes $RamOutput -NewVHDPath "$($FolderBrowser.SelectedPath)\$i.vhdx" -NewVHDSizeBytes $VHDOutput -SwitchName $VMSwitchName -Generation $Gen | Set-VM -ProcessorCount $CoreCount -StaticMemory -CheckpointType Disabled
-                $NewNameInt = $NewNameInt - 1
-                }
+            }
+            $NewNameInt = $NewNameInt - 1
         }until($NewNameInt -eq 0)
 
     }
