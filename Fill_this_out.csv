@@ -1,3 +1,0 @@
-#TYPE System.Management.Automation.PSCustomObject,,,,,,,
-FirstName,LastName,FullName,UserName,Password,Path,Group,UPN
-Justace,Cornelder,Justace Cornelder,Justace.Cornelder,P@ssw0rd,"OU=sales,DC=root,DC=local",sales,Justace.Cornelder@root.local
