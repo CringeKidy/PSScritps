@@ -17,51 +17,60 @@ if ((Test-Admin) -eq $false)  {
     exit
 }
 
-Write-Host Where is the CSV File
+$CSVCreation = read-host 'Do you want a CSV Created Y or N'
+$CSVLocation;
 
-Add-Type -AssemblyName System.Windows.Forms
-$CSVFile = New-Object System.Windows.Forms.OpenFileDialog 
-[void]$CSVFile.ShowDialog()
-$CSVFile.FileName
+if($CSVCreation.ToLower() -eq 'y' -or $CSVCreation.ToLower() -eq 'yes'){
+    $newrow = [PSCustomObject] @{
+        "FirstName" = "";
+        "LastName" = "";
+        "FullName" = "";
+        "UserName" = "just take the full name and do a find and replace on this row and replace all spaces with a dot";
+        "Password" = "P@ssw0rd";
+        "Path" = "";
+        "Group" = "";
+        "UPN" = "use formla =CONCAT(D3, '@<your domian FQDN>)";
+    }
 
-$Users = Import-Csv $CSVFile.FileName
+    $newrow | Export-Csv  "$env:USERPROFILE\Desktop\Fill_this_out.csv"
+    read-host "I have made a new csv on the desktop. EDIT it with the information you want to add and then come back and hit enter"
+
+    $CSVLocation = "$env:USERPROFILE\Desktop\Fill_this_out.csv"
+}
+else{
+    Write-Host Where is the CSV File
+    
+    Add-Type -AssemblyName System.Windows.Forms
+    $CSVFile = New-Object System.Windows.Forms.OpenFileDialog 
+    [void]$CSVFile.ShowDialog()
+    $CSVLocation = $CSVFile.FileName
+    write-host $CSVLocation
+}
+
+
+
+$Users = Import-Csv $CSVLocation
 
 Foreach($User in $Users){
-   $password = (ConvertTo-SecureString -AsPlainText $User."Password" -force)
-   $Group = $User.Group
-
-   $UPN = $User."User name" + "@" + $User.domain
-
-   $Settings = @{
-    'Name' = $User."User name"
-    'GivenName' = $User."First name"
-    'Surname' = $User."Last name"
-    'Displayname' = $User."Full name"
-    'SamAccountName' = $User."User name"
-    'UserPrincipalName' = $UPN
-    'AccountPassword' = $password
-    'Enabled' = $true
-    'Path' = $User.Path
-   }
-
+   $password = (ConvertTo-SecureString -AsPlainText $User.Password -force)
 
    Try{
-        Get-ADOrganizationalUnit $Settings.Path
+        Get-ADOrganizationalUnit $User.Path
    }
    catch{
-        New-ADOrganizationalUnit -Name ($Settings.Path -split ',')[0].Substring(3) 
+        New-ADOrganizationalUnit -Name ($User.Path -split ',')[0].Substring(3) 
    }
-
 
    Try{
-       Get-ADGroup  $Group
+        Get-ADGroup  $User.Group
    }
    catch{
-    New-AdGroup -Name $Group  -GroupScope Global -Path $Settings.Path
+        New-AdGroup -Name $User.Group  -GroupScope Global -Path $User.Path
    }
 
-   New-ADUser @Settings
-   Add-ADGroupMember -Identity $Group -Members $Settings.SamAccountName
+   New-ADUser -Name $User.FullName -DisplayName $User.UserName -GivenName $User.FirstName -Surname $User.LastName -SamAccountName $User.UserName `
+              -UserPrincipalName $User.UPN -AccountPassword $password -Enabled $true -Path $User.Path
+   Add-ADGroupMember -Identity $User.Group -Members $User.UserName
 
 }
 
