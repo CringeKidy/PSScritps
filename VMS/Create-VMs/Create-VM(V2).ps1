@@ -224,6 +224,8 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   exit
 }
 
+$commands = 'VMName', 'VMRam', 'VMCores', 'VMGen', 'VMSwitch', 'VHDSize', 'VMLocation';
+
 do{
     $CreationType = Read-Host 'You like to do this by CSV or go Through PS'
     switch -Regex ($CreationType.ToLower()) {
@@ -332,30 +334,44 @@ do{
                 {
                     do{
                         $Amount = Read-Host "How many VMs?"
-                        Write-Host "Sorry that is not a Number"
+
+                        if($Amount -notmatch '^\d+$'){
+                            Write-Host "Sorry that is not a Number"
+                        }
                     }
                     until($Amount -match '^\d+$')
 
                     $CustomizeVM = Read-Host "Do you want to do Spreate Settings for Each VM"
-                    $SavedSettings = @{
-                        $VMName = @($null);
-                        $VMRam = @($null);
-                        $VMCores = @($null);
-                        $VMGen = @($null);
-                        $VHDSize = @($null);
-                        $VHDLocation = @($null);
-                    }
+                    $SavedSettings = @{}
 
                     switch -regex ($CustomizeVM) {
                         'y(Yes)?'
                         {
-                           $Things = 'VMName', 'VMRam', 'VMCores', 'VMGen', 'VHDSize', 'VMLocation';
                             do{
-                                foreach ($name in $Things) {
-                                    $Answer = Read-Host "please enter the value for $($VMName)"
+                                foreach ($name in $commands) {
+                                    $var = Get-Variable "Saved$name" -ErrorAction SilentlyContinue
 
-                                    $Answer = $Answer.Split(" ")
-                                    Write-Host $Answer
+                                    if($null -ne $var.Value){
+                                        Write-Host "$($name), is saved to $($var.value)"
+                                        Continue
+                                    }
+                                    else{
+                                        $Answer = Read-Host "please enter the value for $($name)"
+                                        switch ($Answer.Contains("-save")) {
+                                            $true{
+                                                $SavedSettings.Add("$name", "$($Answer.Split(" ")[0])")
+                                                Set-variable -Name "Saved$name" -Value ($Answer.Split(" ")[0]) -Scope script
+                                                $Amount = $Amount - 1
+                                                write-host $Amount
+                                            }
+                                            $false{
+                                                Set-variable -Name "Unsaved$name" -Value ($Answer.Split(" ")[0]) -Scope script
+                                                $Amount = $Amount - 1
+                                                write-host $Amount
+                                                
+                                            }
+                                        }
+                                    }
                                 }
                                 
                             }until($Amount -eq 0)
@@ -381,3 +397,8 @@ do{
     }
 }
 until($finshed -eq $true)
+
+
+foreach($command in $commands){
+    Clear-Variable "Saved$($command)"
+}
