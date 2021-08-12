@@ -142,7 +142,6 @@ function Get-ISO() {
     }
 
 }
-
 function Set-VHDSize(){
     
     param(
@@ -326,30 +325,54 @@ do{
         }
         "p(owershell)?"
         {
+            $MutipleVMS = Read-Host "Build Mutiple VMS?"
 
-            return Read-Host "Sorry this is not finished yet"
-            $finshed = $true
-            <# 
-            $UserRAM = Read-Host "How much ram"
-            $UserVHDSize = Read-host "Size of VHD"
-            $UserVMISO = "";
-            $UserVMSwitch = Read-Host "Name of the switch you want to add"
+            switch -regex ($MutipleVMS) {
+                "y(Yes)?"
+                {
+                    do{
+                        $Amount = Read-Host "How many VMs?"
+                        Write-Host "Sorry that is not a Number"
+                    }
+                    until($Amount -match '^\d+$')
 
-            $RAM = Set-Ram -RAM $Setting.RAM
-            $VHDSize = Set-VHDSize -VHDSize $Setting.VHDSize
-            $VMISO = Get-ISO -location $Setting.ISOLocation
-            $VMSwitch = Get-Switch -Name $Setting.Switch -Type $Setting.SwitchType
+                    $CustomizeVM = Read-Host "Do you want to do Spreate Settings for Each VM"
+                    $SavedSettings = @{
+                        $VMName = @($null);
+                        $VMRam = @($null);
+                        $VMCores = @($null);
+                        $VMGen = @($null);
+                        $VHDSize = @($null);
+                        $VHDLocation = @($null);
+                    }
+
+                    switch -regex ($CustomizeVM) {
+                        'y(Yes)?'
+                        {
+                           $Things = 'VMName', 'VMRam', 'VMCores', 'VMGen', 'VHDSize', 'VMLocation';
+                            do{
+                                foreach ($name in $Things) {
+                                    $Answer = Read-Host "please enter the value for $($VMName)"
+
+                                    $Answer = $Answer.Split(" ")
+                                    Write-Host $Answer
+                                }
+                                
+                            }until($Amount -eq 0)
+                        }
+                        Default {}
+                    }
+
+
+                }
+                Default {}
+            }
             
-            if($VMISO -eq $true){
-                New-VM $Setting.VMName -MemoryStartupBytes $RAM -NewVHDPath "$($Setting.VHDLocation)\$($Setting.VMName).vhdx" -NewVHDSizeBytes $VHDSize -SwitchName "Default Switch" -Generation $Setting.Gen | Set-VM -ProcessorCount $Setting.Cores -DynamicMemory -CheckpointType Disabled
-                Set-VMFirmware $DVD.VMName -FirstBootDevice "Default Switch"
-            }
-            else{
-                New-VM $Setting.VMName -MemoryStartupBytes $RAM -NewVHDPath "$($Setting.VHDLocation)\$($Setting.VMName).vhdx" -NewVHDSizeBytes $VHDSize -SwitchName $VMSwitch -Generation $Setting.Gen | Set-VM -ProcessorCount $Setting.Cores -DynamicMemory -CheckpointType Disabled | Add-VMDvdDrive -Path $VMISO
-                Set-VMFirmware $DVD.VMName -FirstBootDevice $VMISO
-            }
-
-            $finshed = $true #>
+            
+            
+            New-VM $Setting.VMName -MemoryStartupBytes $RAM -NewVHDPath "$($Setting.VHDLocation)\$($Setting.VMName).vhdx" -NewVHDSizeBytes $VHDSize -SwitchName "Default Switch" -Generation $Setting.Gen | Set-VM -ProcessorCount $Setting.Cores -DynamicMemory -CheckpointType Disabled
+            $finshed = $true
+            
         }
         default{
             Write-Output "Sorry that is not an option"
