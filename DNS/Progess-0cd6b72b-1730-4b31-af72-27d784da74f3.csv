@@ -1,19 +1,19 @@
-Name,Domain Name,"Public" IP,Domain Built,Router,Email with disclaimer,Lab 1,Lab 2,Lab 3,Lab 4,Lab 5,Lab 6,Lab 7,Lab 8,Can access using OWA and Outlook Internally and externally,Create Room resource and book it out,Send and Receive externally,Distribution Group and Shared Mailbox
-"Arsh","it.local","192.168.52.181","Completed","Completed",,"Completed",,,,,,,,,,,
-"Ashley","Nitro.com","192.168.52.23","Completed",,,,"Restarting",,,,,,,,,,
-"Ben","LEPDynamics.com","192.168.52.210","Completed","Completed",,"Completed","Yes","Yes","Yes","Yes","Yes",,,,,,
-"Gunjan","myclass.com",,"Completed",,,,"In Progress",,,,,,,,,,
-"Gurjinder","adatum.com","192.168.52.225","Completed","Completed",,"Completed","Yes","Yes","Yes","Yes","Yes","Yes",,,,,
-"Jagjit (JD)","king.com",,"Completed",,,,,,,,,,,,,,
-"Jay","lvl6class.local","192.168.231.86","Completed","Completed",,"Completed","yes","Yes","Yes","Yes","yes","Yes","Yes","Yes",,,"Yes"
-"Justace","root.local","192.168.52.204","Completed","Completed",,"Completed","Yes","Yes","Yes","Yes","Yes",,,"Yes","Yes","Yes",
-"Khushpreet","whitedove.com","192.168.112.1","Completed","Completed",,"In Progress",,,,,,,,,,,
-"Leon","lab.com","192.168.52.72","Completed","Completed",,"In Progress",,,,,,,,,,,
-"Max","max.local","192.168.52.100","Completed","Completed",,"Completed","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes",,"Yes","Yes"
-"Nathan","spongebob.com",,"Completed","In Progress",,"In Progress",,,,,,,,,,,
-"Ranjan","ranjan.local","192.168.52.173","Completed","Completed",,"In Progress",,,,,,,,,,,
-"Reid",,,"Completed","Completed",,"Completed","In Progress",,,,,,,,,,
-"Subeshka","asus.local","192.168.52.166","Completed","Completed",,"In Progress",,,,,,,,,,,
-"Tui","Centex.local",,"Completed","Completed",,,,,,,,,,,,,
-"Zian","a.local","192.168.52.x","Completed","Completed",,,"Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes",
-"Richard","richardmcc.l6","192.168.52.134","Completed","Completed",,"Completed",,,,,,,,,,,
+Name,DomainName,PublicIP,Domain Built,Router,Email with disclaimer,Lab 1,Lab 2,Lab 3,Lab 4,Lab 5,Lab 6,Lab 7,Lab 8,Can access using OWA and Outlook Internally and externally,Create Room resource and book it out,Send and Receive externally,Distribution Group and Shared Mailbox
+Arsh,it.local,192.168.52.181,Completed,Completed,,Completed,,,,,,,,,,,
+Ashley,Nitro.com,192.168.52.23,Completed,,,,Restarting,,,,,,,,,,
+Ben,LEPDynamics.com,192.168.52.210,Completed,Completed,,Completed,Yes,Yes,Yes,Yes,Yes,,,,,,
+Gunjan,myclass.com,,Completed,,,,In Progress,,,,,,,,,,
+Gurjinder,adatum.com,192.168.52.225,Completed,Completed,,Completed,Yes,Yes,Yes,Yes,Yes,Yes,,,,,
+Jagjit (JD),king.com,,Completed,,,,,,,,,,,,,,
+Jay,lvl6class.local,192.168.231.86,Completed,Completed,,Completed,yes,Yes,Yes,Yes,yes,Yes,Yes,Yes,,,Yes
+Justace,root.local,192.168.52.204,Completed,Completed,,Completed,Yes,Yes,Yes,Yes,Yes,,,Yes,Yes,Yes,
+Khushpreet,whitedove.com,192.168.112.1,Completed,Completed,,In Progress,,,,,,,,,,,
+Leon,lab.com,192.168.52.72,Completed,Completed,,In Progress,,,,,,,,,,,
+Max,max.local,192.168.52.100,Completed,Completed,,Completed,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,,Yes,Yes
+Nathan,spongebob.com,,Completed,In Progress,,In Progress,,,,,,,,,,,
+Ranjan,ranjan.local,192.168.52.173,Completed,Completed,,In Progress,,,,,,,,,,,
+Reid,,,Completed,Completed,,Completed,In Progress,,,,,,,,,,
+Subeshka,asus.local,192.168.52.166,Completed,Completed,,In Progress,,,,,,,,,,,
+Tui,Centex.local,,Completed,Completed,,,,,,,,,,,,,
+Zian,a.local,192.168.52.156,Completed,Completed,,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,
+Richard,richardmcc.l6,192.168.52.134,Completed,Completed,,Completed,,,,,,,,,,,
