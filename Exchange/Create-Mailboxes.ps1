@@ -112,7 +112,7 @@ do{
 
             $ServerSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://$ServerName/PowerShell/ -Authentication Kerberos -Credential $ServerLogin
             
-            Import-PSSession $ServerSession -DisableNameChecking `
+            Import-PSSession $ServerSession -DisableNameChecking 
 
             $Users = Import-Csv $CSVLocation
 
