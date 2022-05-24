@@ -69,9 +69,8 @@ Write-host "Checking if choco is installed" -ForegroundColor green
 $testchoco = Get-Command choco.exe -ErrorAction SilentlyContinue
 if(!$testchoco){
     Write-host "Choco does not seem to be installed, Installing that now"
-    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-WebRequest https://community.chocolatey.org/install.ps1 -UseBasicParsing
-  }
-
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+}
 
 Write-host -Backgroundcolor black -Foregroundcolor Red "Installing Office"
 choco install office365proplus -y

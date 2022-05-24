@@ -91,7 +91,7 @@ if($NeedWifi -eq "y" -or $NeedWifi -eq "yes" ){
 }
 
 write-host -ForegroundColor Cyan -BackgroundColor Black "Installing Chocoltey"
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 write-host -ForegroundColor Green -BackgroundColor Black "Installing Google Chrome, Adobe Reader and 7zip with choco"
 choco install googlechrome adobereader 7zip -y
